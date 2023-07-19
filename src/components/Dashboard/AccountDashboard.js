@@ -11,7 +11,7 @@ const AccountDashboard = () => {
     fetchProfileAction();
   }, []);
 
-  console.log(profile?.user?.accounts);
+  // console.log(profile?.user?.accounts);
 
   return (
     <>
