@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { authContext } from "../context/AuthContext/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
+  const {loginUserAction, userAuth} = useContext(authContext);
+  
   //form data
   const [formData, setFormData] = useState({
     email: "",
@@ -8,7 +12,7 @@ const Login = () => {
   });
   const { email, password } = formData;
 
-  //onChnage
+  //onChange
   const onChangeInput = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -18,8 +22,9 @@ const Login = () => {
     e.preventDefault();
 
     //dispatch action
-
+    loginUserAction(formData);
   };
+  // console.log(userAuth);
   return (
     <>
       <section className="py-24 md:py-32 bg-white">
@@ -30,7 +35,9 @@ const Login = () => {
                 Sign in to your account
               </h3>
               <p>
-
+                {userAuth?.error && (
+                  <span className="text-red-500">{userAuth?.error}</span>
+                )}
               </p>
             </div>
             <form onSubmit={onSubmitHandler}>
@@ -47,7 +54,7 @@ const Login = () => {
                   name="email"
                   className="appearance-none block w-full p-3 leading-5 text-coolGray-900 border border-coolGray-200 rounded-lgshadow-md placeholder-coolGray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
                   type="email"
-                  placeholder="i-novotek@gmail.com"
+                  placeholder="johndoe@gmail.com"
                 />
               </div>
               <div className="mb-4">
@@ -84,14 +91,8 @@ const Login = () => {
               </button>
               <p className="text-center">
                 <span className="text-xs font-medium">
-                  Don’t have an account? <a href="/register">Sign up</a>
+                  Don’t have an account? <Link to="/register" className="text-green-500">Sign up</Link>
                 </span>
-                <button
-                  className="inline-block text-xs font-medium text-green-500 hover:text-green-600 hover:underline"
-                  type="submit"
-                >
-                  Sign up
-                </button>
               </p>
             </form>
           </div>
