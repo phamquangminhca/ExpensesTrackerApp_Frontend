@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useReducer } from "react";
-import { LOGIN_FAILED, LOGIN_SUCCESS, FETCH_PROFILE_FAILED, FETCH_PROFILE_SUCCESS } from "./authActionTypes";
+import { LOGIN_FAILED, LOGIN_SUCCESS, FETCH_PROFILE_FAILED, FETCH_PROFILE_SUCCESS, LOGOUT } from "./authActionTypes";
 import { API_URL_USER } from "../../../utils/apiURL";
 
 //Auth context
@@ -48,6 +48,16 @@ const reducer = (state, action) => {
         error: payload,
         profile: null,
       };
+    case LOGOUT:
+      //remove from storage
+      localStorage.removeItem('userAuth');
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        userAuth: null,
+        profile: null,
+      }
     default:
       return state;
   }
@@ -73,7 +83,8 @@ const AuthContextProvider = ({children}) => {
           payload: res.data,
         })
       }
-
+      //Redirect
+      window.location.href = '/dashboard';
     } catch (error) {
       dispatch({
         type: LOGIN_FAILED,
@@ -106,14 +117,26 @@ const AuthContextProvider = ({children}) => {
     }
   }
 
+  //Log out
+  const logoutUserAction = () => {
+    dispatch({
+      type: LOGOUT,
+      payload: null,
+    });
+    //Redirect
+    window.location.href = '/login';
+  }
+
   return (
     <authContext.Provider 
         value={{
           loginUserAction,
           userAuth: state,
+          token: state?.userAuth?.token,
           fetchProfileAction,
           profile: state?.profile,
           error: state?.error,
+          logoutUserAction
         }}
     >
       {children}

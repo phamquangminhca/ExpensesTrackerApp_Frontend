@@ -11,8 +11,27 @@ export default function AccountDetails() {
   useEffect(() => {
     getAccountDetails(accountID);
   }, [accountID]);
+  console.log(account?.data?.initialBalance);
   console.log(account?.data);
-  console.log(account?.data?.transactions);
+  
+  //Calculate total income
+  const totalIncome = account?.data?.transactions?.reduce((acc, transaction) => {
+      if(transaction?.transactionType === 'Income') {
+        return acc + transaction?.amount;
+      } else {
+        return acc;
+      }
+  }, 0)
+  
+  //Calculate total expenses
+  const totalExpenses = account?.data?.transactions?.reduce((acc, transaction) => {
+    if(transaction?.transactionType === 'Expenses') {
+      return acc + transaction?.amount;
+    } else {
+      return acc;
+    }
+}, 0)
+  
   return (
     <>
       {account?.data?.transactions?.length <= 0 ? (
@@ -42,7 +61,7 @@ export default function AccountDetails() {
                           Total Balance
                         </dt>
                         <dd className=" text-5xl font-bold tracking-tight text-indigo-600">
-                          $ 4000
+                          $ {totalIncome + account?.data?.initialBalance - totalExpenses}
                         </dd>
                       </div>
                       <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
@@ -50,7 +69,7 @@ export default function AccountDetails() {
                           Total Expenses
                         </dt>
                         <dd className=" text-5xl font-bold tracking-tight text-red-600">
-                          $ 3000
+                          $ {totalExpenses}
                         </dd>
                         <Link
                           // to={`/expenses-list/${accountID}`}
@@ -64,7 +83,7 @@ export default function AccountDetails() {
                           Total Income
                         </dt>
                         <dd className=" text-5xl font-bold tracking-tight text-green-600">
-                          $ 900
+                          $ {totalIncome + account?.data?.initialBalance}
                         </dd>
                         <Link
                           // to={`/income-list/${accountID}`}

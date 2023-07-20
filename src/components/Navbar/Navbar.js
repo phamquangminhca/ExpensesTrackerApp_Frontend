@@ -2,9 +2,12 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-
+import { authContext } from "../context/AuthContext/AuthContext";
+import { useContext } from "react";
 
 export default function Navbar() {
+  const { logoutUserAction, token } = useContext(authContext);
+  console.log(token);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -43,41 +46,50 @@ export default function Navbar() {
                     Home
                   </Link>
 
-                  <>
-                    <Link
-                      to="/add-transaction"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Add Transaction
-                    </Link>
-                    <Link
-                      to="/dashboard"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Dashboard
-                    </Link>
-                  </>
+                  {token && (
+                    <>
+                      <Link
+                        to="/add-transaction"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Add Transaction
+                      </Link>
+                      <Link
+                        to="/dashboard"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Dashboard
+                      </Link>
+                    </>
+                  )}
 
-                  <>
-                    <Link
-                      to="/login"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                      Register
-                    </Link>
-                  </>
+                  {!token && (
+                    <>
+                      <Link
+                        to="/login"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        to="/register"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Register
+                      </Link>
+                    </>
+                  )}
 
-                  <>
-                    <button className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      Logout
-                    </button>
-                  </>
+                  {token && (
+                    <>
+                      <button
+                        onClick={logoutUserAction}
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="flex items-center">
@@ -107,31 +119,40 @@ export default function Navbar() {
                 Home
               </Link>
 
-              <Link
-                to="/dashboard"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Dashboard
-              </Link>
-
-              <>
+              {token && (
                 <Link
-                  to="/login"
+                  to="/dashboard"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Login
+                  Dashboard
                 </Link>
-                <Link
-                  to="/register"
+              )}
+
+              {!token && (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
+
+              {token && (
+                <button
+                  onClick={logoutUserAction}
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Register
-                </Link>
-              </>
-
-              <button className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                Logout
-              </button>
+                  Logout
+                </button>
+              )}
             </div>
           </Disclosure.Panel>
         </>
