@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { authContext } from "../context/AuthContext/AuthContext";
 
 const AllTransactions = ({ transactions }) => {
-  const account = {};
-  // console.log(transactions);
   const { userAuth } = useContext(authContext);
   const author = userAuth?.userAuth?.fullname;
   return (
@@ -21,7 +19,7 @@ const AllTransactions = ({ transactions }) => {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <Link
-              to={`/add-transactions/${account?._id}/`}
+              to={`/add-transaction/${transactions[0]?.account}/`}
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
               Add New Transaction
@@ -99,13 +97,13 @@ const AllTransactions = ({ transactions }) => {
                             {transaction?.notes}
                           </td>
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <a
-                              href="#"
+                            <Link
+                              to="#"
                               className="text-indigo-600 hover:text-indigo-900"
                             >
                               Edit
                               <span className="sr-only">, {transaction?.name}</span>
-                            </a>
+                            </Link>
                           </td>
                         </tr>
                       );

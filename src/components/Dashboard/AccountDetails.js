@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import AllTransactions from "./AllTransactions";
 import { useContext, useEffect } from "react";
 import { accountContext } from "../context/AccountContext/AccountContext";
+import { PlusIcon } from "@heroicons/react/20/solid";
 
 export default function AccountDetails() {
   const { accountID } = useParams();
@@ -13,29 +14,45 @@ export default function AccountDetails() {
   }, [accountID]);
   console.log(account?.data?.initialBalance);
   console.log(account?.data);
-  
+
   //Calculate total income
-  const totalIncome = account?.data?.transactions?.reduce((acc, transaction) => {
-      if(transaction?.transactionType === 'Income') {
+  const totalIncome = account?.data?.transactions?.reduce(
+    (acc, transaction) => {
+      if (transaction?.transactionType === "Income") {
         return acc + transaction?.amount;
       } else {
         return acc;
       }
-  }, 0)
-  
+    },
+    0
+  );
+
   //Calculate total expenses
-  const totalExpenses = account?.data?.transactions?.reduce((acc, transaction) => {
-    if(transaction?.transactionType === 'Expenses') {
-      return acc + transaction?.amount;
-    } else {
-      return acc;
-    }
-}, 0)
-  
+  const totalExpenses = account?.data?.transactions?.reduce(
+    (acc, transaction) => {
+      if (transaction?.transactionType === "Expenses") {
+        return acc + transaction?.amount;
+      } else {
+        return acc;
+      }
+    },
+    0
+  );
+
   return (
     <>
       {account?.data?.transactions?.length <= 0 ? (
-        <h2 className="text-center text-red-500 m-10">No transactions found</h2>
+        <>
+          <h2 className="text-center text-red-500 m-10">
+            No transactions found
+          </h2>
+          <div className="text-center">
+            <Link to={`/add-transaction/${accountID}`} className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+              <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              <span>New Transaction</span>
+            </Link>
+          </div>
+        </>
       ) : (
         <>
           <div className="bg-gray-50 pt-12 sm:pt-16">
@@ -61,7 +78,10 @@ export default function AccountDetails() {
                           Total Balance
                         </dt>
                         <dd className=" text-5xl font-bold tracking-tight text-indigo-600">
-                          $ {totalIncome + account?.data?.initialBalance - totalExpenses}
+                          ${" "}
+                          {totalIncome +
+                            account?.data?.initialBalance -
+                            totalExpenses}
                         </dd>
                       </div>
                       <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">

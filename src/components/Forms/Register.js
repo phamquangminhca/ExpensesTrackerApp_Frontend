@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { authContext } from "../context/AuthContext/AuthContext";
 
 const Register = () => {
+  const {registerUserAction, error} = useContext(authContext);
   //form data
   const [formData, setFormData] = useState({
     fullname: "",
@@ -22,6 +24,7 @@ const Register = () => {
     if (!email || !password || !fullname) {
       return alert("Please provide all details");
     }
+    registerUserAction(formData);
   };
 
   return (

@@ -3,6 +3,8 @@ import { API_URL_ACCOUNT } from "../../../utils/apiURL";
 import {
   ACCOUNT_DETAILS_FAIL,
   ACCOUNT_DETAILS_SUCCESS,
+  ACCOUNT_CREATION_SUCCESS,
+  ACCOUNT_CREATION_FAIL,
 } from "./accountActionTypes";
 import { createContext, useReducer } from "react";
 
@@ -10,6 +12,7 @@ export const accountContext = createContext();
 
 //Initial State
 const INITIAL_STATE = {
+  userAuth: JSON.parse(localStorage.getItem('userAuth')),
   account: null,
   accounts: [],
   loading: false,
@@ -28,6 +31,20 @@ const accountReducer = (state, action) => {
         error: null,
       };
     case ACCOUNT_DETAILS_FAIL:
+      return {
+        ...state,
+        account: null,
+        loading: false,
+        error: payload,
+      };
+    case ACCOUNT_CREATION_SUCCESS:
+      return {
+        ...state,
+        account: payload,
+        loading: false,
+        error: null,
+      };
+    case ACCOUNT_CREATION_FAIL:
       return {
         ...state,
         account: null,
@@ -68,9 +85,40 @@ export const AccountContextProvider = ({ children }) => {
     }
   };
 
+  //Create account action
+  const createAccountAction = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state?.userAuth?.token}`,
+      },
+    };
+    try {
+      const res = await axios.post(`${API_URL_ACCOUNT}`, formData, config);
+      if (res?.data?.status === "success") {
+        //dispatch
+        dispatch({
+          type: ACCOUNT_CREATION_SUCCESS,
+          payload: res?.data,
+        });
+      }
+        console.log(res);
+    } catch (error) {
+      dispatch({
+        type: ACCOUNT_CREATION_FAIL,
+        payload: error?.response?.data?.message,
+      });
+    }
+  };
+
   return (
     <accountContext.Provider
-      value={{ getAccountDetails, account: state?.account }}
+      value={{
+        getAccountDetails,
+        account: state?.account,
+        createAccountAction,
+        error: state?.error,
+      }}
     >
       {children}
     </accountContext.Provider>

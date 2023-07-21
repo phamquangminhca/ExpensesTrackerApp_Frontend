@@ -16,7 +16,7 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
-                  {/* Mobile menu button */}
+                  {/* Desktop */}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -92,20 +92,22 @@ export default function Navbar() {
                   )}
                 </div>
               </div>
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Link
-                    to="/add-transaction"
-                    className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <PlusIcon
-                      className="-ml-1 mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                    <span>New Transaction</span>
-                  </Link>
+              {token && (
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Link
+                      to="/dashboard/accounts/create"
+                      className="relative inline-flex items-center rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <PlusIcon
+                        className="-ml-1 mr-2 h-5 w-5"
+                        aria-hidden="true"
+                      />
+                      <span>Create Account</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 

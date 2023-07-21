@@ -1,20 +1,16 @@
 import { useContext, useState } from "react";
-import { TransactionContext } from "../context/TransactionContext/TransactionsContext";
-import { useParams } from "react-router-dom";
+import { accountContext } from "../context/AccountContext/AccountContext";
 
 
-export default function AddTransaction() {
-  const {createTransactionAction, error} = useContext(TransactionContext);
-  const { accountID } = useParams();
+export default function AddAccount() {
+  const { createAccountAction, error } = useContext(accountContext);
   const [formData, setFormData] = useState({
     name: "",
-    transactionType: "",
-    amount: "",
-    category: "",
+    accountType: "default",
+    initialBalance: "",
     notes: "",
-    color: "",
-    date: "",
   });
+
   //handle form change
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +19,7 @@ export default function AddTransaction() {
   //handle form submit
   const handleSubmit = e => {
     e.preventDefault();
-    createTransactionAction({...formData, account: accountID});
+    createAccountAction(formData);
   };
 
   return (
@@ -31,7 +27,7 @@ export default function AddTransaction() {
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Add Transaction
+            Add Account
           </h2>
         </div>
 
@@ -44,37 +40,24 @@ export default function AddTransaction() {
                 </label>
                 <div className="mt-1">
                   <input
-                    name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    name="name"
                     type="text"
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Transaction Type
-                </label>
-                <select
-                  name="transactionType"
-                  value={formData.transactionType}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-2 rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                >
-                  <option value="Income">Income (+)</option>
-                  <option value="Expenses">Expenses (-)</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Amount ($)
+                  Initial Deposit ($)
                 </label>
                 <div className="mt-1">
                   <input
-                    name="amount"
-                    value={formData.amount}
+                    value={formData.initialBalance}
                     onChange={handleChange}
+                    name="initialBalance"
                     type="number"
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
@@ -83,63 +66,30 @@ export default function AddTransaction() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Transaction Category
+                  Account Type
                 </label>
                 <select
-                  name="category"
-                  value={formData.category}
+                  name="accountType"
+                  value={formData.accountType}
                   onChange={handleChange}
                   className="mt-1 block w-full border-2 rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 >
-                  <option value=" Food">Food</option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Shopping">Shopping</option>
+                  <option value="default" disabled>Select an option...</option>
+                  <option value="Savings">Savings</option>
+                  <option value="Investment">Investment</option>
+                  <option value="Checking">Checking</option>
+                  <option value="Credit Card">Credit Card</option>
                   <option value="Utilities">Utilities</option>
-                  <option value="Healt">Health</option>
+                  <option value="Builing">Builing</option>
                   <option value="Travel">Travel</option>
                   <option value="Education">Education</option>
                   <option value="Personal">Personal</option>
                   <option value="Groceries">Groceries</option>
-                  <option value="Bills">Bills</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Project">Project</option>
                   <option value="Uncategorized">Uncategorized</option>
                 </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Pick Color
-                </label>
-                <div className="mt-1">
-                  <input
-                    value={formData.color}
-                    name="color"
-                    onChange={handleChange}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                    }}
-                    type="color"
-                    className="block  appearance-none rounded-md border border-gray-300 px-2 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Date
-                </label>
-                <div className="mt-1">
-                  <input
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    type="date"
-                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Add Note
@@ -148,6 +98,7 @@ export default function AddTransaction() {
                   <textarea
                     rows={4}
                     name="notes"
+                    type="text"
                     value={formData.notes}
                     onChange={handleChange}
                     className="block w-full border-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -159,7 +110,7 @@ export default function AddTransaction() {
                   type="submit"
                   className="flex w-full  justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Add New Transaction
+                  Add New Account
                 </button>
               </div>
             </form>

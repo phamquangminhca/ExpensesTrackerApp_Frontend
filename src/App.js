@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import AddTransaction from './components/Forms/AddTransaction';
 import AccountDashboard from './components/Dashboard/AccountDashboard';
 import AccountDetails from './components/Dashboard/AccountDetails';
+import AddAccount from './components/Forms/AddAccount';
 
 
 function App() {
@@ -16,9 +17,10 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
-        <Route path='/add-transaction' element={<AddTransaction/>}/>
+        <Route path='/add-transaction/:accountID' element={<AddTransaction/>}/>
         <Route path='/dashboard' element={<AccountDashboard/>}/>
         <Route path='/account-details/:accountID' element={<AccountDetails/>}/>
+        <Route path='/dashboard/accounts/create' element={<AddAccount/>}/>
 
       </Routes>
     </BrowserRouter>
