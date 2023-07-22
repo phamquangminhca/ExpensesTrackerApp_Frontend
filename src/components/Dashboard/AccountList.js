@@ -59,7 +59,7 @@ const AccountList = ({ accounts }) => {
                 {/* List */}
                 {accounts?.map((acc) => {
                   return (
-                    <Link className="group block mb-6" to="#">
+                    <div key={acc?._id} className="group block mb-6" to="#">
                       <div className="flex items-center justify-between flex-wrap p-10 bg-coolGray-50 group-hover:bg-coolGray-100 rounded-md shadow-md transition duration-200">
                         <div className="w-full md:w-1/2 mb-2 md:mb-0">
                           <h3 className="text-lg md:text-xl text-coolGray-800 group-hover:text-coolGray-900 font-semibold">
@@ -86,7 +86,7 @@ const AccountList = ({ accounts }) => {
                           </div>
                         </Link>
                       </div>
-                    </Link>
+                    </div>
                   );
                 })}
               </>

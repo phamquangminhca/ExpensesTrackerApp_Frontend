@@ -4,16 +4,14 @@ import { useParams } from "react-router-dom";
 
 
 export default function AddTransaction() {
-  const {createTransactionAction, error} = useContext(TransactionContext);
+  const {createTransactionAction} = useContext(TransactionContext);
   const { accountID } = useParams();
   const [formData, setFormData] = useState({
     name: "",
-    transactionType: "",
+    transactionType: "default",
     amount: "",
-    category: "",
+    category: "default",
     notes: "",
-    color: "",
-    date: "",
   });
   //handle form change
   const handleChange = e => {
@@ -62,6 +60,7 @@ export default function AddTransaction() {
                   onChange={handleChange}
                   className="mt-1 block w-full border-2 rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 >
+                  <option value="default" disabled>Select an option...</option>
                   <option value="Income">Income (+)</option>
                   <option value="Expenses">Expenses (-)</option>
                 </select>
@@ -91,6 +90,7 @@ export default function AddTransaction() {
                   onChange={handleChange}
                   className="mt-1 block w-full border-2 rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 >
+                  <option value="default" disabled>Select an option...</option>
                   <option value=" Food">Food</option>
                   <option value="Transportation">Transportation</option>
                   <option value="Entertainment">Entertainment</option>
@@ -104,40 +104,6 @@ export default function AddTransaction() {
                   <option value="Bills">Bills</option>
                   <option value="Uncategorized">Uncategorized</option>
                 </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Pick Color
-                </label>
-                <div className="mt-1">
-                  <input
-                    value={formData.color}
-                    name="color"
-                    onChange={handleChange}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                    }}
-                    type="color"
-                    className="block  appearance-none rounded-md border border-gray-300 px-2 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Date
-                </label>
-                <div className="mt-1">
-                  <input
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    type="date"
-                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
               </div>
 
               <div>

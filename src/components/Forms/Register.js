@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { authContext } from "../context/AuthContext/AuthContext";
 
 const Register = () => {
-  const {registerUserAction, error} = useContext(authContext);
+  const {registerUserAction} = useContext(authContext);
   //form data
   const [formData, setFormData] = useState({
     fullname: "",

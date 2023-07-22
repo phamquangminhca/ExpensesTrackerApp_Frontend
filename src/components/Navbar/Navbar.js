@@ -47,20 +47,12 @@ export default function Navbar() {
                   </Link>
 
                   {token && (
-                    <>
-                      <Link
-                        to="/add-transaction"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        Add Transaction
-                      </Link>
-                      <Link
-                        to="/dashboard"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        Dashboard
-                      </Link>
-                    </>
+                    <Link
+                      to="/dashboard"
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Dashboard
+                    </Link>
                   )}
 
                   {!token && (

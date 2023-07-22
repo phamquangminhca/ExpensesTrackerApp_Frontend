@@ -11,6 +11,7 @@ export default function AccountDetails() {
   const { getAccountDetails, account } = useContext(accountContext);
   useEffect(() => {
     getAccountDetails(accountID);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountID]);
   console.log(account?.data?.initialBalance);
   console.log(account?.data);
@@ -118,7 +119,7 @@ export default function AccountDetails() {
               </div>
             </div>
           </div>
-          <AllTransactions transactions={account?.data?.transactions} />
+          <AllTransactions accountID={accountID} transactions={account?.data?.transactions} />
         </>
       )}
     </>

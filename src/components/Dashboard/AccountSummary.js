@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const AccountSummary = () => {
+const AccountSummary = ({totalIncome, totalExpenses, totalInititalBalance}) => {
   return (
     <>
       <div className="max-w-4xl mx-auto mb-12 text-center">
@@ -24,7 +25,7 @@ const AccountSummary = () => {
                     </h3>
                   </div>
                   <div className="w-auto p-2">
-                    <a href="#">
+                    <Link to="#">
                       <svg
                         width={16}
                         height={16}
@@ -37,13 +38,13 @@ const AccountSummary = () => {
                           fill="#D5DAE1"
                         />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center justify-between -m-1">
                   <div className="w-auto p-1">
                     <h2 className="font-medium text-3xl text-black tracking-tighter">
-                      $4,540
+                      ${totalIncome + totalInititalBalance}
                     </h2>
                   </div>
                   <div className="w-auto p-1">
@@ -75,7 +76,7 @@ const AccountSummary = () => {
                     </h3>
                   </div>
                   <div className="w-auto p-2">
-                    <a href="#">
+                    <Link to="#">
                       <svg
                         width={16}
                         height={16}
@@ -88,13 +89,13 @@ const AccountSummary = () => {
                           fill="#D5DAE1"
                         />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center justify-between -m-1">
                   <div className="w-auto p-1">
                     <h2 className="font-medium text-3xl text-black tracking-tighter">
-                      14
+                      ${totalExpenses}
                     </h2>
                   </div>
                   <div className="w-auto p-1">
@@ -126,7 +127,7 @@ const AccountSummary = () => {
                     </h3>
                   </div>
                   <div className="w-auto p-2">
-                    <a href="#">
+                    <Link to="#">
                       <svg
                         width={16}
                         height={16}
@@ -139,13 +140,13 @@ const AccountSummary = () => {
                           fill="#D5DAE1"
                         />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center justify-between -m-1">
                   <div className="w-auto p-1">
                     <h2 className="font-medium text-3xl text-black tracking-tighter">
-                      $91.42
+                      ${totalIncome + totalInititalBalance - totalExpenses}
                     </h2>
                   </div>
                   <div className="w-auto p-1">

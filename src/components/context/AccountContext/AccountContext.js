@@ -101,8 +101,10 @@ export const AccountContextProvider = ({ children }) => {
           type: ACCOUNT_CREATION_SUCCESS,
           payload: res?.data,
         });
+        console.log();
+        window.location.href = `/account-details/${res?.data?.data?._id}`;
       }
-        console.log(res);
+        console.log(res?.data?.data?._id);
     } catch (error) {
       dispatch({
         type: ACCOUNT_CREATION_FAIL,

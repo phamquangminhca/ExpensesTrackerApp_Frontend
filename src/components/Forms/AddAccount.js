@@ -3,7 +3,7 @@ import { accountContext } from "../context/AccountContext/AccountContext";
 
 
 export default function AddAccount() {
-  const { createAccountAction, error } = useContext(accountContext);
+  const { createAccountAction } = useContext(accountContext);
   const [formData, setFormData] = useState({
     name: "",
     accountType: "default",
