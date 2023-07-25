@@ -7,6 +7,7 @@ import AddTransaction from './components/Forms/AddTransaction';
 import AccountDashboard from './components/Dashboard/AccountDashboard';
 import AccountDetails from './components/Dashboard/AccountDetails';
 import AddAccount from './components/Forms/AddAccount';
+import EditTransaction from './components/Forms/EditTransaction';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/dashboard' element={<AccountDashboard/>}/>
         <Route path='/account-details/:accountID' element={<AccountDetails/>}/>
         <Route path='/dashboard/accounts/create' element={<AddAccount/>}/>
+        <Route path='/update-transaction/:transactionID' element={<EditTransaction/>}/>
 
       </Routes>
     </BrowserRouter>
